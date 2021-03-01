@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "862922410768",
+    "project_id": "trueodds-c409c",
+    "storage_bucket": "trueodds-c409c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862922410768:android:41d74e36f1e2153790f395",
+        "android_client_info": {
+          "package_name": "com.trueoddsmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862922410768-rf85et8gtdagac374fbbbnfmsb2i0e8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trueoddsmobile",
+            "certificate_hash": "ac1daedec513cfe344fb069acaee85ec14713cf2"
+          }
+        },
+        {
+          "client_id": "862922410768-7rapdg33oe2jr7kpmf2bpbm6b2a8gq32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_Z03MtKx5Zp0kY-ycjT7nQR5-DAqJP5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862922410768-7rapdg33oe2jr7kpmf2bpbm6b2a8gq32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

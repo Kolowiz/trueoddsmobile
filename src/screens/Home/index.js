@@ -1,6 +1,11 @@
 import React, {useEffect, useCallback, useState} from 'react';
 import {View, StyleSheet, SectionList, Text} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import {
+  InterstitialAd,
+  TestIds,
+  AdEventType,
+} from '@react-native-firebase/admob';
 
 import axios from '../../services/axios';
 import LoadingView from '../../components/LoadingView';
@@ -13,6 +18,10 @@ import Nav from '../../components/Nav';
 import snackbar from '../../lib/snackbar';
 import {groupBy} from '../../lib/helpers';
 
+const adUnitId = __DEV__
+  ? TestIds.INTERSTITIAL
+  : 'ca-app-pub-9918450635846920/8156639074';
+
 const groupByDate = groupBy('date');
 const formatListData = (data) => {
   const result = [];
@@ -24,6 +33,12 @@ const formatListData = (data) => {
   });
   return result;
 };
+
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: ['fashion', 'clothing'],
+});
+
 const Home = ({navigateTo, componentId}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([]);
@@ -51,6 +66,27 @@ const Home = ({navigateTo, componentId}) => {
   useEffect(() => {
     fetchData(page);
   }, [page, fetchData]);
+
+  const [adLoaded, setAdLoaded] = useState(false);
+
+  useEffect(() => {
+    const eventListener = interstitial.onAdEvent((type) => {
+      if (type === AdEventType.LOADED) {
+        setAdLoaded(true);
+      }
+      if (type === AdEventType.OPENED) {
+        setAdLoaded(false);
+      }
+    });
+
+    // Start loading the interstitial straight away
+    interstitial.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      eventListener();
+    };
+  }, []);
 
   const fetchData = useCallback(async (pg) => {
     const limit = 20;
@@ -95,11 +131,19 @@ const Home = ({navigateTo, componentId}) => {
         },
       },
     });
+    if (adLoaded) {
+      interstitial.show();
+    }
   };
 
   const renderItem = ({item, index}) => {
     return (
-      <PredictionItem data={item} index={index} onPressItem={onPressItem} />
+      <PredictionItem
+        adLoaded={adLoaded}
+        data={item}
+        index={index}
+        onPressItem={onPressItem}
+      />
     );
   };
 

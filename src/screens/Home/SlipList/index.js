@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import Moment from 'react-moment';
+import {BannerAd, BannerAdSize, TestIds} from '@react-native-firebase/admob';
 
 import {Colors} from '../../../themes';
 import TopBar from '../../../components/TopBar';
 import NoItems from '../../../components/NoItems';
 import SlipItem from './SlipItem';
 import {SolidIcon} from '../../../components/Icon';
+
+const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : 'ca-app-pub-9918450635846920/1427579197';
 
 const Status = ({status}) => {
   if (status === 'pending') {
@@ -101,6 +106,13 @@ class SlipList extends Component {
             numColumns={1}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={this.renderEmptyView}
+          />
+          <BannerAd
+            unitId={adUnitId}
+            size={BannerAdSize.FULL_BANNER}
+            requestOptions={{
+              requestNonPersonalizedAdsOnly: true,
+            }}
           />
         </View>
       </View>

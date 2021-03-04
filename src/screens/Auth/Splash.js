@@ -39,7 +39,7 @@ const Splash = ({navigateTo, componentId}) => {
               },
             },
           ],
-          {cancelable: true},
+          {cancelable: false},
         );
       } else {
         launchMainApp();

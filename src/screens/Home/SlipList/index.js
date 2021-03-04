@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, FlatList} from 'react-native';
 import Moment from 'react-moment';
 import {BannerAd, BannerAdSize, TestIds} from '@react-native-firebase/admob';
+import Analytics from 'appcenter-analytics';
 
 import {Colors} from '../../../themes';
 import TopBar from '../../../components/TopBar';
@@ -29,6 +30,26 @@ const Status = ({status}) => {
   }
 };
 class SlipList extends Component {
+  componentDidMount = () => {
+    this.recordEvent();
+  };
+  recordEvent = async () => {
+    try {
+      const {data} = this.props;
+      const {slip_category, date} = data;
+
+      const enabled = await Analytics.isEnabled();
+      if (enabled) {
+        await Analytics.trackEvent('Viewed Slip', {
+          SlipCategory: slip_category.name,
+          Date: date,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   renderEmptyView = () => {
     return <NoItems error={false} />;
   };

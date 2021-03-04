@@ -6,7 +6,7 @@ import admob, {MaxAdContentRating} from '@react-native-firebase/admob';
 
 import configureStore from './src/config/configureStore';
 import Provider from './src/components/Provider';
-import {launchMainApp} from './src/app';
+import {startApp} from './src/app';
 import registerScreens from './src/screens';
 import Colors from './src/themes/colors';
 
@@ -61,5 +61,5 @@ Navigation.events().registerAppLaunchedListener(() => {
     },
   });
 
-  launchMainApp();
+  startApp();
 });
